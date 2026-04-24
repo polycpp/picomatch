@@ -1,46 +1,50 @@
 Quickstart
 ==========
 
-This page walks through a minimal picomatch program end-to-end. Copy the
-snippet, run it, then jump to :doc:`../tutorials/index` for task-oriented
-walkthroughs or :doc:`../api/index` for the full reference.
-
-The first quickstart should be written after a real public API slice exists.
+This example builds a reusable matcher for C++ source files and applies it to
+several path-like strings.
 
 Full example
 ------------
 
 .. code-block:: cpp
 
+   #include <iostream>
    #include <polycpp/picomatch/picomatch.hpp>
 
    int main() {
-       return 0;
+       auto is_source = polycpp::picomatch::matcher("src/**/*.cpp");
+
+       std::cout << std::boolalpha;
+       std::cout << is_source("src/lib/picomatch.cpp") << '\n';
+       std::cout << is_source("README.md") << '\n';
    }
 
 Compile it with the same CMake wiring from :doc:`installation`:
 
 .. code-block:: bash
 
-   cmake -B build -G Ninja
-   cmake --build build
-   ./build/my_app
+   cmake -B build -G Ninja -DPOLYCPP_PICOMATCH_BUILD_EXAMPLES=ON
+   cmake --build build --target basic_match
+   ./build/examples/basic_match
 
 Expected output:
 
 .. code-block:: text
 
-   (no output)
+   true
+   false
 
 What just happened
 ------------------
 
-This generated placeholder proves the documentation tree builds. Replace it with the first real user workflow before public release.
+``matcher("src/**/*.cpp")`` created a reusable matcher. The ``**`` segment
+matches through directories, while ``*.cpp`` still applies to the final path
+segment.
 
 Next steps
 ----------
 
-- :doc:`../tutorials/index` - step-by-step walkthroughs of common tasks.
-- :doc:`../guides/index` - short how-tos for specific problems.
-- :doc:`../api/index` - every public type, function, and option.
-- :doc:`../examples/index` - runnable programs you can drop into a sandbox.
+- :doc:`../tutorials/match-source-files` shows a complete filtering workflow.
+- :doc:`../guides/windows-separators` explains explicit Windows matching.
+- :doc:`../api/index` lists every public type and function.

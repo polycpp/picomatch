@@ -1,18 +1,14 @@
 API reference
 =============
 
-The complete public surface of picomatch, generated from the Doxygen
-comments in the headers. If a symbol is missing here, either it's internal
-(under a ``detail`` namespace) or its header comment needs more love -
-please open an issue.
-
-Module index
-------------
+The public API lives in ``include/polycpp/picomatch/picomatch.hpp``.
 
 .. toctree::
    :maxdepth: 1
 
-   placeholder
+   matching
+   options
+   scan-parse
 
 Namespace overview
 ------------------

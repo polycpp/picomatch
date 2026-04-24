@@ -1,44 +1,51 @@
 picomatch
 =========
 
-**C++ companion port of picomatch**
+**C++20 glob matching for path-like strings.**
 
-Generated planning documentation for the picomatch companion library. Replace placeholder user pages as APIs, examples, and tests become real.
+``polycpp/picomatch`` ports the core matching workflow from npm
+``picomatch`` into a typed C++ API: reusable matchers, one-shot checks,
+scan/parse diagnostics, ignore patterns, dotfile rules, braces, brackets,
+globstars, practical extglobs, and explicit POSIX/Windows separator behavior.
 
 .. code-block:: cpp
 
    #include <polycpp/picomatch/picomatch.hpp>
 
+   auto is_source = polycpp::picomatch::matcher("src/**/*.cpp");
+   bool matched = is_source("src/lib/picomatch.cpp");
+
 .. grid:: 2
 
-   .. grid-item-card:: Drop-in familiarity
+   .. grid-item-card:: Familiar glob behavior
       :margin: 1
 
-      Keep the C++ API close to the npm package where that improves migration, and record deliberate C++ adaptations in docs/divergences.md.
+      Match ``*``, ``?``, ``**``, braces, brackets, practical extglobs,
+      dotfiles, basenames, and ignore patterns.
 
-   .. grid-item-card:: C++20 native
+   .. grid-item-card:: Explicit runtime choices
       :margin: 1
 
-      Header-only where possible, zero-overhead abstractions, ``constexpr``
-      and ``std::string_view`` throughout.
+      Set ``Options::windows`` or use POSIX helpers instead of relying on
+      Node platform detection.
 
-   .. grid-item-card:: Tested
+   .. grid-item-card:: Typed C++ API
       :margin: 1
 
-      The test plan starts from upstream tests and fixtures, then adds C++ integration and regression coverage before release.
+      JavaScript closures and callback objects become ``Matcher``,
+      ``Options``, and ``MatchResult``.
 
-   .. grid-item-card:: Plays well with polycpp
+   .. grid-item-card:: Tested against upstream behavior
       :margin: 1
 
-      Uses the same JSON value, error, and typed-event types as the rest of
-      the polycpp ecosystem - no impedance mismatch.
+      The test suite adapts selected upstream cases for API basics,
+      globstars, braces, brackets, dotfiles, extglobs, ignores, and slashes.
 
 Getting started
 ---------------
 
-.. code-block:: bash
+.. code-block:: cmake
 
-   # With FetchContent (recommended)
    FetchContent_Declare(
        polycpp_picomatch
        GIT_REPOSITORY https://github.com/polycpp/picomatch.git

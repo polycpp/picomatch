@@ -1,14 +1,14 @@
 Examples
 ========
 
-Self-contained programs exercising the main features of picomatch. Each
-released example must compile against the public API only - no private
-headers, no non-exported targets.
+Self-contained programs exercising the public API. Examples compile against
+``polycpp::picomatch`` only; they do not include private headers.
 
 .. toctree::
    :maxdepth: 1
 
-   planned
+   basic-match
+   scan-pattern
 
 Running an example
 ------------------
@@ -17,8 +17,6 @@ From the repository root:
 
 .. code-block:: bash
 
-   cmake -B build -G Ninja
-   cmake --build build --target <example_name>
-   ./build/examples/<example_name>
-
-Examples are only built when ``POLYCPP_PICOMATCH_BUILD_EXAMPLES=ON`` is passed to CMake.
+   cmake -B build -G Ninja -DPOLYCPP_PICOMATCH_BUILD_EXAMPLES=ON
+   cmake --build build --target basic_match
+   ./build/examples/basic_match
