@@ -2,97 +2,75 @@
 
 Run `scripts/analyze-upstream-js.py` after upstream intake, then consume `.tmp/dependency-analysis.json` to fill this file.
 
-- package: TODO
-- package version: TODO
-- package root: TODO
+- package: picomatch
+- package version: 4.0.4
+- package root: `/data/work/lib/picomatch/.tmp/upstream/picomatch`
 - analyzer json: `.tmp/dependency-analysis.json`
 - include dev dependencies: no
-- dependency source install used: TODO
+- dependency source install used: yes
 - companion root checked: `/data/work/lib`
 
 ## Package entry metadata
 
-- main: TODO
-- module: TODO
-- types: TODO
-- exports: TODO
-- bin: TODO
+- main: index.js
+- module: none declared
+- types: none declared
+- exports: none declared
+- bin: none declared
 
 ## Direct dependencies
 
-- TODO
+- none detected
 
 ## Dependency ownership decisions
 
-For every direct runtime dependency, choose exactly one outcome:
-
-- use existing polycpp companion
-- create separate private polycpp companion repo
-- implement private helper in this repo
-- optional adapter
-- deferred or unsupported feature
-
-For every dependency, also choose a license strategy:
-
-- permissive dependency ok with notice
-- use existing companion license
-- GPL-compatible repo or defer
-- AGPL-compatible repo or defer
-- optional GPL adapter or defer
-- optional AGPL adapter or defer
-- document LGPL obligations and linking model
-- keep MPL code separated or replace/defer
-- clean-room replacement
-- dev/test-only, not shipped
-- manual license review required (analyzer-only state; strict readiness fails until this is resolved)
-
-License evidence must be concrete enough for another agent to audit. Acceptable examples:
-
-- package.json license field
-- manual SPDX check: LICENSE confirms MIT
-- existing companion repo license reviewed
-- dev/test-only dependency, not shipped
-
-Do not leave analyzer-only evidence such as `unknown`, `unverified`, or `heuristic` in this table before strict readiness.
+There are no direct runtime dependencies in upstream `package.json`, so all v0 runtime behavior is implemented inside this repo. Existing companion repos are not required for dependency ownership.
 
 | Package | Kind | Requested | Installed | License | License evidence | License impact | License strategy | Affects repo license | Deps | Source files | Node API calls | JS API calls | Recommendation | Rationale |
 |---|---|---|---|---|---|---|---|---|---:|---:|---:|---:|---|---|
-| TODO | TODO | TODO | TODO | TODO | TODO | TODO | TODO | TODO | 0 | 0 | 0 | 0 | TODO | TODO |
 
 ## License impact summary
 
-- upstream package license: TODO
-- repo license decision: TODO
-- GPL/AGPL dependencies: TODO
-- LGPL/MPL dependencies: TODO
-- permissive dependencies requiring notices: TODO
-- dev/test-only dependencies excluded from shipped artifacts: TODO
-- dependency license notices to add to `THIRD_PARTY_LICENSES.md`: TODO
+- upstream package license: MIT from package.json license field
+- repo license decision: MIT, matching the permissive upstream package license and existing companion repo convention
+- GPL/AGPL dependencies: none
+- LGPL/MPL dependencies: none
+- permissive dependencies requiring notices: upstream `picomatch` MIT notice only
+- dev/test-only dependencies excluded from shipped artifacts: upstream dev dependencies `eslint`, `fill-range`, `gulp-format-md`, `mocha`, and `nyc` are not vendored, linked, or shipped
+- dependency license notices to add to `THIRD_PARTY_LICENSES.md`: upstream `picomatch` MIT notice and source URL
 
 ## Transitive dependency summary
 
-- TODO
+No production dependency graph exists. Analyzer output has an empty `directDependencies` array and empty `directDependencyRows` array.
 
 ## Runtime API usage
 
 ### Target package
 
-- entry points analyzed: TODO
-- source files analyzed: TODO
-- external imports seen from target: TODO
+- entry points analyzed: `index.js`, reachable `lib/picomatch.js`, `lib/parse.js`, `lib/scan.js`, `lib/constants.js`, and `lib/utils.js`
+- source files analyzed: six runtime JavaScript files
+- external imports seen from target: only local files under `lib/`
 
 ### Node.js API usage
 
-- TODO
+- `process.platform`: used by upstream OS detection; C++ v0 replaces this with explicit `Options::windows`
 
 ### JavaScript API usage
 
-- TODO
+- String operations: `slice`, `replace`, `trim`, `includes`, `lastIndexOf`, `repeat`, `toLowerCase`
+- Array operations: `push`, `pop`, `map`, `some`, `slice`, `indexOf`, `unshift`, `Array.isArray`
+- Regex operations: `RegExp.prototype.exec`, `RegExp.prototype.test`
+- Other built-ins: `Object.assign`, `Math.min`
 
 ## Porting decisions
 
-- TODO
+- Use a deterministic C++ matcher engine instead of depending on JavaScript regex semantics.
+- Represent options as a typed `Options` struct.
+- Represent match information as `MatchResult` instead of an untyped JS object.
+- Represent `scan()` output as `ScanResult` with booleans and token metadata.
+- Keep range expansion built in for simple alphanumeric ranges; defer user-provided range expansion callbacks.
+- Keep all dependency license scope in this repo because no runtime third-party dependencies are used.
 
 ## Analyzer warnings
 
-- TODO
+- none
