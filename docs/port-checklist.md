@@ -105,4 +105,4 @@ Legend:
 - [x] generated docs placeholder pages replaced with real public documentation
 - [x] `python3 docs/build.py` passes
 - [x] third-party license notices complete
-- [ ] GitHub repo visibility changed to public
+- [x] GitHub repo visibility changed to public
